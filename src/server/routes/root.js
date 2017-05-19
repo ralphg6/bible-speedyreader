@@ -12,7 +12,7 @@ const assets = JSON.parse(readFileSync(`${__dirname}/public/assets.json`))
 const manifestUrl = `/${assets['manifest.json']}`
 const inlineCss = readFileSync(`${__dirname}/public/${assets['bundle.css']}`)
 const inlineJs = readFileSync(`${__dirname}/public/${assets['bundle.js']}`)
-const AppShell = ({ html, state }) => `<!DOCTYPE html>
+const AppShell = ({html, state}) => `<!DOCTYPE html>
 <html>
   <head>
     <script>if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js'); }</script>
@@ -38,7 +38,10 @@ const createPreloadedState = () => ({}) // stub
 const createAppShell = (store) => {
   const state = store.getState()
   const html = render(<App store={store} />)
-  return AppShell({ html, state })
+  return AppShell({
+    html,
+    state
+  })
 }
 
 export default Router().get('/', (req, res) => {
@@ -48,7 +51,7 @@ export default Router().get('/', (req, res) => {
     store.dispatch(fetchInitialState()),
     100 // adjust for optimal threshold
   )
-  .catch((err) => console.log(err))
-  .then(() => res.send(createAppShell(store)))
-  .catch((err) => console.log(err))
+    .catch((err) => console.log(err))
+    .then(() => res.send(createAppShell(store)))
+    .catch((err) => console.log(err))
 })
