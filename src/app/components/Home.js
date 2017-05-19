@@ -8,7 +8,7 @@ export default class Home extends Component {
     super(props);
 
     this.state = {
-      counter: 1,
+      counter: 0,
       length: 1,
       interval: 0,
       text: [""],
@@ -21,7 +21,7 @@ export default class Home extends Component {
 
   clearText() {
     this.setState({
-      counter: 1,
+      counter: 0,
       length: 1,
       text: [""],
       word: "",
@@ -76,7 +76,8 @@ export default class Home extends Component {
       fetchival("http://localhost:9999/" + encodeURI(query) + "?translation=almeida").get()
         .then((json) => {
           this.setText(json.text);
-        });
+        })
+        .catch();
       this.setState({
         query: query
       })
@@ -131,7 +132,7 @@ export default class Home extends Component {
         <div className='card'>
           <input id="query-input" className="text-centred" onKeyup={e => this.setQuery(e.target.value)}/>
           <button onClick={() => this.setState({
-        counter: 1
+        counter: 0
       })}>Recomeçar</button>
       <button onClick={() => this.back()}>Voltar</button>
       </div>
